@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gabriel Espinoza</title>
+<meta name="description" content="Gabriel Espinoza — Wharton sophomore studying finance. Notes on curiosity, businesses, and mentoring.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1F2B;
+    --ink-soft:#4A4F5C;
+    --paper:#F4F5F1;
+    --paper-raised:#EBEDE6;
+    --green:#2F4B3C;
+    --green-tint:#E4EAE4;
+    --gold:#A9834F;
+    --gold-tint:#F1E7D8;
+    --rule:#D8D9D2;
+    --max:660px;
+    --wide:1000px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:500;
+    line-height:1.15;
+    margin:0;
+    color:var(--ink);
+  }
+
+  a{ color:var(--green); }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  p{ margin:0 0 1.1em; }
+  p:last-child{ margin-bottom:0; }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+  .wrap-wide{ max-width:var(--wide); margin:0 auto; padding:0 24px; }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:20;
+    background:rgba(244,245,241,0.92);
+    backdrop-filter:saturate(1.1) blur(6px);
+    border-bottom:1px solid var(--rule);
+  }
+  .nav-inner{
+    max-width:var(--wide); margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+  }
+  .nav-name{ font-family:'Fraunces', serif; font-weight:500; font-size:1.02rem; }
+  .nav-links{ display:flex; gap:22px; list-style:none; margin:0; padding:0; font-size:0.92rem; }
+  .nav-links a{
+    text-decoration:none; color:var(--ink-soft); padding-bottom:2px;
+    border-bottom:1px solid transparent; transition:border-color .15s ease, color .15s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{ color:var(--ink); border-bottom-color:var(--gold); }
+
+  /* ---------- photo placeholder system ---------- */
+  .photo{
+    position:relative; overflow:hidden;
+    background:var(--paper-raised);
+    border:1px solid var(--rule);
+    border-radius:3px;
+  }
+  .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .photo img.pos-top{ object-position:center 12%; }
+  .photo .ph{
+    display:none; position:absolute; inset:0; flex-direction:column;
+    align-items:center; justify-content:center; gap:10px; padding:18px;
+    text-align:center; color:var(--ink-soft);
+  }
+  .photo.empty .ph{ display:flex; }
+  .photo.empty img{ display:none; }
+  .photo .ph svg{ width:26px; height:26px; opacity:0.55; }
+  .photo .ph .ph-label{ font-size:0.82rem; font-weight:600; color:var(--ink); }
+  .photo .ph .ph-meta{ font-size:0.74rem; color:var(--ink-soft); font-family:ui-monospace, monospace; }
+
+  .r-4-5{ aspect-ratio:4/5; }
+  .r-1-1{ aspect-ratio:1/1; }
+  .r-3-2{ aspect-ratio:3/2; }
+  .r-4-3{ aspect-ratio:4/3; }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:88px 0 0; border-top:none; }
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 1.4fr; gap:44px; align-items:center;
+  }
+  .hero .photo{ max-width:320px; }
+  .hero-kicker{
+    font-size:0.92rem; color:var(--ink-soft); margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:1.4rem; font-weight:500; line-height:1.45; max-width:34ch;
+  }
+  .hero .tagline{
+    margin-top:16px; color:var(--ink-soft); font-size:1.02rem; max-width:44ch;
+  }
+
+  @media (max-width:760px){
+    .hero-grid{ grid-template-columns:1fr; gap:32px; }
+    .hero .photo{ max-width:200px; margin:0 auto; }
+  }
+
+  /* ---------- reusable note (replaces old boxed callouts) ---------- */
+  .note{
+    border-left:2px solid var(--gold); padding-left:18px;
+    font-family:'Fraunces', serif; font-style:italic; color:var(--ink);
+    font-size:1rem; line-height:1.5;
+  }
+  .note-label{
+    display:block; font-family:'Public Sans', sans-serif; font-style:normal;
+    font-weight:600; font-size:0.78rem; color:var(--gold); margin-bottom:7px;
+  }
+  .note-origin{ position:relative; padding-right:64px; }
+  .note-origin .shelf-motif{
+    position:absolute; right:0; bottom:-4px; width:48px; height:48px; opacity:0.4;
+  }
+  @media (max-width:480px){
+    .note-origin{ padding-right:18px; }
+    .note-origin .shelf-motif{ display:none; }
+  }
+
+  /* ---------- generic section ---------- */
+  section{ padding:88px 0; border-top:1px solid var(--rule); }
+  section.band{ background:var(--paper-raised); }
+  /* .wrap / .wrap-wide set horizontal padding via shorthand, which was zeroing out
+     the vertical padding above (equal-or-lower specificity loses to the type
+     selector's declaration order). Restore real vertical rhythm here, at higher
+     specificity, so every section actually gets breathing room. */
+  section.wrap, section.wrap-wide{ padding-top:104px; padding-bottom:104px; }
+  .hero.wrap-wide{ padding-top:96px; padding-bottom:0; }
+  .closing.wrap-wide{ padding-top:72px; padding-bottom:84px; }
+  @media (max-width:700px){
+    section.wrap, section.wrap-wide{ padding-top:72px; padding-bottom:72px; }
+    .hero.wrap-wide{ padding-top:64px; }
+  }
+  .eyebrow{
+    color:var(--gold); font-weight:600; font-size:0.85rem; margin-bottom:10px;
+  }
+  section h2{ font-size:1.55rem; margin-bottom:26px; }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns:220px 1fr; gap:40px; align-items:start; }
+  @media (max-width:700px){ .about-grid{ grid-template-columns:1fr; } .about-grid .photo{ max-width:220px; } }
+  .about-grid p{ color:var(--ink); max-width:60ch; }
+
+  /* ---------- thinking ---------- */
+  .content > p{ max-width:66ch; }
+  .content > p + p{ margin-top:1.1em; }
+
+  .thinking-top{
+    display:grid; grid-template-columns:1fr 230px; gap:40px; align-items:start;
+    margin-bottom:1.1em;
+  }
+  .thinking-top > p{ margin-bottom:0; max-width:52ch; }
+  @media (max-width:760px){
+    .thinking-top{ grid-template-columns:1fr; gap:20px; }
+  }
+
+  .diagram{
+    margin-top:28px; padding:22px 24px; background:var(--paper-raised);
+    border:1px solid var(--rule); border-radius:4px;
+  }
+  .diagram .diagram-title{ font-size:0.82rem; font-weight:600; color:var(--ink-soft); margin-bottom:14px; }
+  .diagram-cols{ display:grid; grid-template-columns:1fr auto 1fr; gap:18px; align-items:center; }
+  @media (max-width:560px){ .diagram-cols{ grid-template-columns:1fr; } .diagram-vs{ display:none; } }
+  .diagram-col h4{ font-family:'Public Sans',sans-serif; font-weight:600; font-size:0.92rem; margin-bottom:10px; }
+  .diagram-col.us h4{ color:var(--green); }
+  .diagram-col.arg h4{ color:var(--gold); }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-size:0.8rem; padding:5px 10px; border-radius:20px; background:#fff;
+    border:1px solid var(--rule); color:var(--ink-soft);
+  }
+  .diagram-col.us .tag{ border-color:#c7d4cc; }
+  .diagram-col.arg .tag{ border-color:var(--gold-tint); }
+
+  .logo-row{ display:flex; gap:16px; margin-top:16px; }
+  .logo-item{ display:flex; flex-direction:column; align-items:center; gap:6px; width:56px; }
+  .logo-slot{
+    width:42px; height:42px; border-radius:50%; background:#fff;
+    border:1px solid var(--rule); display:flex; align-items:center; justify-content:center;
+    overflow:hidden; position:relative;
+  }
+  .logo-slot img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .logo-slot.empty img{ display:none; }
+  .logo-fallback{ display:none; font-family:'Public Sans',sans-serif; font-size:0.68rem; font-weight:600; color:var(--ink-soft); }
+  .logo-slot.empty .logo-fallback{ display:block; }
+  .logo-name{ font-size:0.68rem; color:var(--ink-soft); text-align:center; line-height:1.25; }
+  .logo-inline{
+    display:inline-flex; width:26px; height:26px; border-radius:50%; background:#fff;
+    border:1px solid var(--rule); align-items:center; justify-content:center; overflow:hidden;
+    vertical-align:-7px; margin-right:8px;
+  }
+  .logo-inline img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .logo-inline.empty img{ display:none; }
+  .logo-inline.empty .logo-fallback{ display:block; }
+  .logo-inline .logo-fallback{ font-size:0.55rem; }
+  .diagram-vs{ font-family:'Fraunces',serif; font-style:italic; color:var(--ink-soft); text-align:center; }
+  .diagram-note{ margin-top:14px; font-size:0.85rem; color:var(--ink-soft); }
+
+  .price-toggle{ display:flex; gap:8px; margin-bottom:16px; }
+  .ptab{
+    font-family:'Public Sans', sans-serif; font-size:0.85rem; padding:7px 14px;
+    border-radius:20px; border:1px solid var(--rule); background:#fff;
+    color:var(--ink-soft); cursor:pointer; transition:border-color .15s ease, color .15s ease;
+  }
+  .ptab.active{ border-color:var(--green); color:var(--green); font-weight:600; background:var(--green-tint); }
+  .ptab:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+  .price-bar{ display:flex; height:38px; border-radius:6px; overflow:hidden; }
+  .price-bar span{ display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:600; }
+  .price-legend{ display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin-top:14px; font-size:0.85rem; color:var(--ink-soft); }
+  .price-legend .pl-item{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .price-legend .dot{ width:9px; height:9px; border-radius:2px; display:inline-block; margin-right:6px; flex-shrink:0; }
+  .price-legend .pl-label{ display:flex; align-items:center; }
+  .price-legend .pl-value{ color:var(--ink); font-weight:600; }
+  @media (max-width:480px){ .price-legend{ grid-template-columns:1fr; } }
+
+  /* ---------- exploring ---------- */
+  .split{ display:grid; grid-template-columns:1fr; gap:36px; }
+  @media (min-width:640px){ .split{ grid-template-columns:1fr 1fr; } .split .col + .col{ border-left:1px solid var(--rule); padding-left:36px; } }
+  .split.single{ display:block; }
+  .split.single .col{ max-width:62ch; }
+  .col h3{ font-size:1.05rem; font-weight:500; margin-bottom:10px; }
+  .col p{ color:var(--ink-soft); font-size:0.98rem; }
+
+  /* ---------- timeline ---------- */
+  .timeline{ position:relative; }
+  .timeline::before{
+    content:''; position:absolute; left:9px; top:6px; bottom:6px; width:1px; background:var(--rule);
+  }
+  .t-item{ position:relative; padding-left:38px; }
+  .t-item + .t-item{ margin-top:56px; }
+  .t-dot{
+    position:absolute; left:0; top:4px; width:19px; height:19px; border-radius:50%;
+    background:var(--paper); border:2px solid var(--green); z-index:1;
+  }
+  .t-item.alt .t-dot{ border-color:var(--gold); }
+  .t-meta{ font-size:0.82rem; color:var(--ink-soft); margin-bottom:6px; }
+  .t-meta strong{ color:var(--ink); font-weight:600; }
+  .t-item h3{ font-size:1.15rem; margin-bottom:10px; font-weight:500; }
+  .t-body{ display:grid; grid-template-columns:1fr; gap:20px; }
+  .t-body p{ color:var(--ink); font-size:0.98rem; }
+
+  /* ---------- beyond / stats ---------- */
+  .stat-strip{ display:flex; gap:36px; flex-wrap:wrap; margin-bottom:36px; }
+  .stat{ min-width:100px; }
+  .stat .num{ font-family:'Fraunces',serif; font-size:2.1rem; color:var(--green); line-height:1; }
+  .stat .label{ font-size:0.82rem; color:var(--ink-soft); margin-top:4px; }
+
+  .asides{ margin-top:36px; }
+  .asides p{ font-size:1rem; margin:0; }
+
+  /* ---------- closing ---------- */
+  .closing{ padding:60px 0 70px; }
+  .closing-content{ max-width:56ch; }
+  .closing h2{ font-size:1.7rem; margin-bottom:16px; }
+  .closing p{ color:var(--ink-soft); }
+  .contact-row{ display:flex; gap:18px; margin-top:22px; align-items:center; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    background:var(--green); color:#fff; padding:11px 20px; border-radius:4px;
+    font-size:0.92rem; font-weight:600; transition:background .15s ease;
+  }
+  .btn:hover{ background:#243c30; }
+  .icon-link{ display:inline-flex; align-items:center; gap:6px; color:var(--ink-soft); text-decoration:none; font-size:0.92rem; }
+  .icon-link:hover{ color:var(--ink); }
+  .icon-link svg{ width:17px; height:17px; }
+
+  footer{ padding:30px 0 54px; text-align:center; }
+  footer p{ color:var(--ink-soft); font-size:0.85rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-name">Gabriel Espinoza</span>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#thinking">Thinking</a></li>
+      <li><a href="#exploring">Exploring</a></li>
+      <li><a href="#work">Worked on</a></li>
+      <li><a href="#beyond">Beyond</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero wrap-wide" style="border-top:none;">
+    <div class="hero-grid">
+      <!-- Replace with: images/hero-photo.jpg (portrait, ~1000x1250px, 4:5) -->
+      <figure class="photo r-4-5 empty">
+        <img src="images/hero-photo.jpg" alt="Gabriel Espinoza"
+             onload="this.parentElement.classList.remove('empty')"
+             onerror="this.parentElement.classList.add('empty')">
+        <figcaption class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/><path d="M8 5l1.3-2h5.4L16 5"/></svg>
+          <span class="ph-label">Add a photo of yourself</span>
+          <span class="ph-meta">images/hero-photo.jpg &middot; 4:5</span>
+        </figcaption>
+      </figure>
+      <div>
+        <p class="hero-kicker">Gabriel Espinoza &mdash; sophomore, Wharton School</p>
+        <h1>Curious about how businesses actually work.</h1>
+        <p class="tagline">I study finance at Penn, but most of what&rsquo;s here is the thinking behind that &mdash; the questions I keep chasing, and what I&rsquo;ve learned trying to answer them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="wrap-wide band" id="about">
+    <div class="about-grid">
+      <!-- Replace with: images/penn-photo.jpg (~800x800px, 1:1) — you at Penn/Wharton -->
+      <figure class="photo r-1-1 empty">
+        <img src="images/penn-photo.jpg" alt="Gabriel at Penn" class="pos-top"
+             onload="this.parentElement.classList.remove('empty')"
+             onerror="this.parentElement.classList.add('empty')">
+        <figcaption class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/><path d="M8 5l1.3-2h5.4L16 5"/></svg>
+          <span class="ph-label">Add photo — at Penn</span>
+          <span class="ph-meta">images/penn-photo.jpg &middot; 1:1</span>
+        </figcaption>
+      </figure>
+      <div>
+        <div class="eyebrow">About</div>
+        <p>I&rsquo;m Gabriel &mdash; Gabe &mdash; a sophomore at the University of Pennsylvania studying finance. I grew up in Newark, New Jersey, and I&rsquo;m the first in my family to go to college.</p>
+        <p>Most of what&rsquo;s on this page is stuff you won&rsquo;t find on my resume: what I&rsquo;ve been curious about, what I still don&rsquo;t understand, and what I&rsquo;ve learned from mentoring people who remind me of myself a few years ago.</p>
+        <div class="note note-origin" style="margin-top:24px;">
+          <span class="note-label">Where it started</span>
+          When I was about twelve, I walked into my uncle&rsquo;s basement and found it lined with shelves of IT parts &mdash; all organized in a way that only made sense once you understood why he&rsquo;d priced and arranged them that way. I didn&rsquo;t know it then, but that was probably the first time I got curious about how a business actually works.
+          <svg class="shelf-motif" viewBox="0 0 52 52" aria-hidden="true">
+            <rect x="4" y="4" width="44" height="44" rx="2" fill="none" stroke="var(--ink-soft)" stroke-width="1.3"/>
+            <line x1="4" y1="19" x2="48" y2="19" stroke="var(--ink-soft)" stroke-width="1.3"/>
+            <line x1="4" y1="34" x2="48" y2="34" stroke="var(--ink-soft)" stroke-width="1.3"/>
+            <rect x="9" y="8" width="9" height="8" fill="none" stroke="var(--ink-soft)" stroke-width="1.1"/>
+            <rect x="22" y="9" width="6" height="7" fill="none" stroke="var(--ink-soft)" stroke-width="1.1"/>
+            <rect x="10" y="23" width="7" height="8" fill="none" stroke="var(--ink-soft)" stroke-width="1.1"/>
+            <rect x="30" y="24" width="10" height="7" fill="none" stroke="var(--ink-soft)" stroke-width="1.1"/>
+            <rect x="14" y="38" width="8" height="7" fill="none" stroke="var(--ink-soft)" stroke-width="1.1"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THINKING -->
+  <section class="wrap" id="thinking">
+    <h2>How I think about businesses</h2>
+    <div class="content">
+      <div class="thinking-top">
+        <p>I can&rsquo;t walk into a restaurant or a hardware store without wondering why something costs what it costs. Is that price just covering the ingredients or materials, or is it also covering rent, insurance, and whatever else keeps the place running? What else is that business actually being paid for?</p>
+        <div class="note">
+          <span class="note-label">What I got wrong</span>
+          I used to assume a company&rsquo;s cash on hand was basically revenue minus expenses. It&rsquo;s not &mdash; financing changes everything.
+        </div>
+      </div>
+
+      <div class="diagram price-demo">
+        <div class="diagram-title">Where a dollar goes</div>
+        <div class="price-toggle" role="group" aria-label="Choose a business type">
+          <button type="button" class="ptab active" data-key="rest">Restaurant</button>
+          <button type="button" class="ptab" data-key="hw">Hardware store</button>
+        </div>
+        <div class="price-bar" id="price-bar"></div>
+        <div class="price-legend" id="price-legend"></div>
+        <p class="diagram-note" id="price-source"></p>
+      </div>
+
+      <p>Loans, accounts payable, depreciation and amortization all mean a business can look very different on paper than it does in its bank account, and figuring out how those pieces fit together has become one of my favorite parts of any case or pitch.</p>
+      <p>I got to see this play out directly this summer, researching how Argentine sports clubs are financed compared to U.S. professional franchises while working in the audit department at RPA Consulting in Buenos Aires:</p>
+
+      <div class="diagram">
+        <div class="diagram-title">How the two systems raise money</div>
+        <div class="diagram-cols">
+          <div class="diagram-col us">
+            <h4>U.S. franchises</h4>
+            <div class="tag-row">
+              <span class="tag">Media rights deals</span>
+              <span class="tag">Merchandising</span>
+              <span class="tag">Sponsorships</span>
+              <span class="tag">Loans / credit</span>
+            </div>
+            <div class="logo-row">
+              <div class="logo-item">
+                <figure class="logo-slot empty">
+                  <img src="images/logo-la-galaxy.png" alt="LA Galaxy"
+                       onload="this.parentElement.classList.remove('empty')"
+                       onerror="this.parentElement.classList.add('empty')">
+                  <span class="logo-fallback">LAG</span>
+                </figure>
+                <span class="logo-name">LA Galaxy</span>
+              </div>
+              <div class="logo-item">
+                <figure class="logo-slot empty">
+                  <img src="images/logo-ny-red-bulls.png" alt="New York Red Bulls"
+                       onload="this.parentElement.classList.remove('empty')"
+                       onerror="this.parentElement.classList.add('empty')">
+                  <span class="logo-fallback">NYRB</span>
+                </figure>
+                <span class="logo-name">NY Red Bulls</span>
+              </div>
+              <div class="logo-item">
+                <figure class="logo-slot empty">
+                  <img src="images/logo-colorado-rapids.png" alt="Colorado Rapids"
+                       onload="this.parentElement.classList.remove('empty')"
+                       onerror="this.parentElement.classList.add('empty')">
+                  <span class="logo-fallback">COL</span>
+                </figure>
+                <span class="logo-name">Colorado Rapids</span>
+              </div>
+            </div>
+          </div>
+          <div class="diagram-vs">vs.</div>
+          <div class="diagram-col arg">
+            <h4>Argentine clubs</h4>
+            <div class="tag-row">
+              <span class="tag">Player transfer sales</span>
+              <span class="tag">Membership dues</span>
+            </div>
+            <div class="logo-row">
+              <div class="logo-item">
+                <figure class="logo-slot empty">
+                  <img src="images/logo-boca-juniors.png" alt="Boca Juniors"
+                       onload="this.parentElement.classList.remove('empty')"
+                       onerror="this.parentElement.classList.add('empty')">
+                  <span class="logo-fallback">BOC</span>
+                </figure>
+                <span class="logo-name">Boca Juniors</span>
+              </div>
+              <div class="logo-item">
+                <figure class="logo-slot empty">
+                  <img src="images/logo-river-plate.png" alt="River Plate"
+                       onload="this.parentElement.classList.remove('empty')"
+                       onerror="this.parentElement.classList.add('empty')">
+                  <span class="logo-fallback">RIV</span>
+                </figure>
+                <span class="logo-name">River Plate</span>
+              </div>
+              <div class="logo-item">
+                <figure class="logo-slot empty">
+                  <img src="images/logo-rosario-central.png" alt="Rosario Central"
+                       onload="this.parentElement.classList.remove('empty')"
+                       onerror="this.parentElement.classList.add('empty')">
+                  <span class="logo-fallback">ROS</span>
+                </figure>
+                <span class="logo-name">Rosario Central</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="diagram-note">Part of that gap comes down to Argentina&rsquo;s economic volatility &mdash; loans and crowdfunding are far less common there than in the U.S., which shapes almost everything else about how a club is run.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORING -->
+  <section class="wrap band" id="exploring">
+    <h2>What I&rsquo;m currently exploring</h2>
+    <div class="split single">
+      <div class="col">
+        <h3><span class="logo-inline empty"><img src="images/logo-nubank.png" alt="" onload="this.parentElement.classList.remove('empty')" onerror="this.parentElement.classList.add('empty')"><span class="logo-fallback">NU</span></span>Nubank</h3>
+        <p>I first heard about Nubank in a Business Spanish class &mdash; a fintech that started by serving a LatAm market with limited access to traditional banking, and grew into one of the region&rsquo;s biggest players. It&rsquo;s now trying to enter the U.S., specifically targeting the Latino population here. I don&rsquo;t know yet whether that move makes sense, and I&rsquo;m still working through it. I follow LatinFinance to keep up with stories like this.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="wrap" id="work">
+    <h2>What I&rsquo;ve worked on</h2>
+    <div class="timeline">
+
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-meta"><strong>RPA Consulting</strong> &mdash; Audit Assistant &nbsp;/&nbsp; Buenos Aires &nbsp;/&nbsp; Summer 2026</div>
+        <h3>Audit work, automation, and a research report on the side</h3>
+        <div class="t-body">
+          <p>Some of it was exactly what you&rsquo;d expect &mdash; reviewing financial statements, occasionally flagging a transaction that didn&rsquo;t quite add up. But I also automated a manual process for generating and sending client letters, and researched how Argentine sports clubs are funded compared to their U.S. counterparts (see above). It was a good reminder that finance work isn&rsquo;t only modeling &mdash; a lot of it is process, research, and figuring out what actually matters in a pile of information.</p>
+        </div>
+      </div>
+
+      <div class="t-item alt">
+        <div class="t-dot"></div>
+        <div class="t-meta"><strong>BlackGen Capital</strong> &mdash; Analyst &nbsp;/&nbsp; Philadelphia</div>
+        <h3>A stock pitch, and how much judgment a DCF actually takes</h3>
+        <div class="t-body">
+          <p>I worked with a small team to build a full stock pitch &mdash; reading through financial statements, building a DCF valuation, and researching an industry from scratch. Our thesis came down to a licensing deal restructuring the company&rsquo;s business model away from merchandise sales and toward licensing its brand. Presenting that recommendation to about 30 members was the first time I&rsquo;d spoken in front of a group that size, and what stuck with me wasn&rsquo;t the DCF itself &mdash; it&rsquo;s mechanical once you know the steps &mdash; but how much judgment goes into deciding which assumptions are actually defensible.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BEYOND -->
+  <section class="wrap band" id="beyond">
+    <h2>Beyond finance</h2>
+
+    <div class="stat-strip">
+      <div class="stat"><div class="num">15</div><div class="label">college mentees<br>(STEP &amp; FORGE)</div></div>
+      <div class="stat"><div class="num">8</div><div class="label">high schoolers mentored<br>(Matriculate &amp; Circle Match)</div></div>
+      <div class="stat"><div class="num">2</div><div class="label">languages<br>(English &amp; Spanish)</div></div>
+    </div>
+
+    <p>I mentor college students through Wharton&rsquo;s STEP and Penn First Plus FORGE programs, and high schoolers through Matriculate and Circle Match &mdash; mostly on college applications and navigating a process that wasn&rsquo;t built with a clear instruction manual for them.</p>
+    <p>One thing mentoring has taught me: showing up matters less than I thought, and structure matters more. I once went a month without meeting one of my mentees, and when we reconnected, they&rsquo;d fallen noticeably behind &mdash; not because we hadn&rsquo;t talked, but because I hadn&rsquo;t given them anything concrete to work on in the meantime. I&rsquo;ve tried to build real accountability into how I mentor since then, rather than assuming good intentions are enough.</p>
+    <p>Outside of mentoring, I&rsquo;m also engaged with Penn&rsquo;s Latino and first-gen community more broadly &mdash; I&rsquo;m on the board of MEChA de Penn and our ALPFA chapter, and I recently joined FGLI Podcast Club, which brings first-gen professionals to campus to talk candidly about their experiences.</p>
+
+    <div class="asides note" style="margin-top:36px;">
+      <span class="note-label">A few other things</span>
+      <p>I study to hype, fast-paced music instead of anything calm. I put cereal in the bowl before the milk. And I have a genuine love for movies &mdash; not just the acclaimed ones, but the ridiculous ones too &mdash; because I like thinking about why a director chose to include or cut a particular scene.</p>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing wrap-wide" id="contact">
+    <div class="closing-content">
+      <h2>Thanks for reading</h2>
+      <p>This is the part of me that doesn&rsquo;t fit neatly into an application &mdash; the pricing questions, the Nubank curiosity, the mentoring lessons. If it&rsquo;s useful to the Recalc team as you review my application, I&rsquo;m glad it&rsquo;s here, and I&rsquo;d welcome the chance to talk more.</p>
+      <div class="contact-row">
+        <a class="btn" href="mailto:gabrieldjespinoza@gmail.com">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          Email me
+        </a>
+        <a class="icon-link" href="#" id="linkedin-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.002 2 2 0 014 .002zM7 8.48H3V21h4V8.48zM13.32 8.48H9.34V21h3.94v-6.4c0-1.7.32-3.34 2.43-3.34 2.08 0 2.1 1.94 2.1 3.45V21H21.8v-7.93c0-3.66-.79-6.48-5.07-6.48-2.06 0-3.44 1.13-4 2.2h-.06V8.48z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>Gabriel Espinoza, University of Pennsylvania</p>
+</footer>
+
+<script>
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#nav-links a'));
+    var sections = links.map(function(l){ return document.querySelector(l.getAttribute('href')); });
+    function setActive(){
+      var pos = window.scrollY + 120;
+      var current = sections[0];
+      for(var i=0;i<sections.length;i++){
+        if(sections[i] && sections[i].offsetTop <= pos) current = sections[i];
+      }
+      links.forEach(function(l){
+        l.classList.toggle('active', l.getAttribute('href') === '#'+(current && current.id));
+      });
+    }
+    document.addEventListener('scroll', setActive, {passive:true});
+    setActive();
+  })();
+</script>
+
+<script>
+  (function(){
+    var bar = document.getElementById('price-bar');
+    var legend = document.getElementById('price-legend');
+    if(!bar || !legend) return;
+
+    var source = document.getElementById('price-source');
+
+    var data = {
+      rest: [
+        {label:'Food and beverage', pct:30, bg:'#DCE6DE', fg:'#2F4B3C'},
+        {label:'Labor', pct:32, bg:'#A9C2AE', fg:'#243b31'},
+        {label:'Rent and other overhead', pct:30, bg:'#6E8C78', fg:'#F4F5F1'},
+        {label:'Margin', pct:8, bg:'#2F4B3C', fg:'#F4F5F1'}
+      ],
+      hw: [
+        {label:'Cost of goods', pct:60, bg:'#DCE6DE', fg:'#2F4B3C'},
+        {label:'Labor', pct:22, bg:'#A9C2AE', fg:'#243b31'},
+        {label:'Rent and other overhead', pct:14, bg:'#6E8C78', fg:'#F4F5F1'},
+        {label:'Margin', pct:4, bg:'#2F4B3C', fg:'#F4F5F1'}
+      ]
+    };
+
+    var sourceText = {
+      rest: 'Rounded industry averages for full-service restaurants, not any single business. Source: National Restaurant Association, 2026 State of the Industry report.',
+      hw: 'Rounded industry averages for independent hardware stores, not any single business. Source: North American Hardware and Paint Association, Cost of Doing Business Study.'
+    };
+
+    function render(key){
+      var seg = data[key];
+      bar.innerHTML = '';
+      legend.innerHTML = '';
+      source.textContent = sourceText[key];
+      seg.forEach(function(s){
+        var d = document.createElement('span');
+        d.style.flexBasis = s.pct + '%';
+        d.style.background = s.bg;
+        d.style.color = s.fg;
+        d.textContent = s.pct >= 12 ? s.pct + '%' : '';
+        bar.appendChild(d);
+
+        var item = document.createElement('div');
+        item.className = 'pl-item';
+        var left = document.createElement('span');
+        left.className = 'pl-label';
+        var dot = document.createElement('span');
+        dot.className = 'dot';
+        dot.style.background = s.bg;
+        left.appendChild(dot);
+        left.appendChild(document.createTextNode(s.label));
+        var right = document.createElement('span');
+        right.className = 'pl-value';
+        right.textContent = s.pct + '%';
+        item.appendChild(left);
+        item.appendChild(right);
+        legend.appendChild(item);
+      });
+    }
+
+    Array.prototype.slice.call(document.querySelectorAll('.ptab')).forEach(function(btn){
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.ptab').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        render(btn.getAttribute('data-key'));
+      });
+    });
+
+    render('rest');
+  })();
+</script>
+
+</body>
+</html>
